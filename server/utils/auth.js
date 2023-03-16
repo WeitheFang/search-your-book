@@ -6,9 +6,9 @@ const expiration = "2h";
 
 module.exports = {
   // In GraphQL APIs, the req object is not used directly. Instead, the middleware function receives an object that contains the req object as a property.
-  authMiddleware: function ({ req }, res, next) {
+  authMiddleware: function ({ req }) {
     // allows token to be sent via  req.query or headers
-    let token = req.query.token || req.headers.authorization || req.body.token;
+    let token = req.query.token || req.headers.authorization || req.query.token;
 
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
@@ -16,7 +16,7 @@ module.exports = {
     }
 
     if (!token) {
-      return res.status(400).json({ message: "You have no token!" });
+      return req;
     }
 
     // verify token and get user data out of it
@@ -25,11 +25,10 @@ module.exports = {
       req.user = data;
     } catch {
       console.log("Invalid token");
-      return res.status(400).json({ message: "invalid token!" });
     }
 
     // send to next endpoint
-    next();
+    return req;
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
