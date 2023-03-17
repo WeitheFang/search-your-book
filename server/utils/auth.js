@@ -8,7 +8,7 @@ module.exports = {
   // In GraphQL APIs, the req object is not used directly. Instead, the middleware function receives an object that contains the req object as a property.
   authMiddleware: function ({ req }) {
     // allows token to be sent via  req.query or headers
-    let token = req.query.token || req.headers.authorization || req.query.token;
+    let token = req.query.token || req.headers.authorization || req.body.token;
 
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {

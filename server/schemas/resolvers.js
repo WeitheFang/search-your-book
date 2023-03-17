@@ -10,19 +10,22 @@ const resolvers = {
   Query: {
     //me query
     me: async (parent, args, context) => {
+      // use context.user so that we can retrieve the logged in user without specifically searching for them
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select("-__v -password")
-          .populate("books");
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
+
         return userData;
       }
-      throw new AuthenticationError("Not logged in");
+      throw new AuthenticationError("No user found! Please log in.");
     },
   },
   Mutation: {
     //login mutation
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
+
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
@@ -30,7 +33,7 @@ const resolvers = {
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
+        throw new AuthenticationError("Incorrect Password!");
       }
 
       const token = signToken(user);
