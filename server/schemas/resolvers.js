@@ -57,7 +57,7 @@ const resolvers = {
         ).populate("books");
         return updatedUser;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be logged in to save books!");
     },
 
     //removeBook mutation
