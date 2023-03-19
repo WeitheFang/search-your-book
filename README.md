@@ -51,15 +51,16 @@ Or simply click on the following link to access the application: https://search-
 ## Demo
 
 The following video is a demo of the application deployed on Heroku:
-<img src="images/demo.gif" alt="demo video">
+<img src="assets/demo.gif" alt="demo video">
 
 This demo video demonstrates the following:
 
 - The application is deployed on Heroku
+- The user can create an account and login to their account
 - The user can search for books using the search engine
 - The user can save books to their personal account
 - The user can delete books from their personal account
-- The user can create an account and login to their account
+- The user can logout of their account
 
 ## Credits
 
